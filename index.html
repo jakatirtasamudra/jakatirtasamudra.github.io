@@ -2,684 +2,977 @@
 <html lang="en">
 
 <head>
-    <title>
-        Jaka Tirta Samudra
-    </title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=0.1, shrink-to-fit=no"> -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio Jaka Tirta Samudra - Lecturer, Researcher & Full Stack Developer.">
+  <title>Jaka Tirta Samudra</title>
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    /* Basic */
+    :root {
+      --bg-dark: #000;
+      --text-dark: #fff;
+      --bg-light: #f4f4f9;
+      --text-light: #222;
+      --accent: orange;
+    }
 
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
+    }
 
-    <link href="me/logo.jpeg" rel="icon" type="image/x-icon">
-    <link href="me/logo.jpeg" rel="apple-touch-icon">
+    body.light {
+      background-color: var(--bg-light);
+      color: var(--text-light);
+    }
 
-    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="css/animate.css">
+    /* Navbar */
+    .navbar {
+      width: 100%;
+      padding: 1rem 2rem;
+      background-color: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      backdrop-filter: blur(6px);
+    }
 
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
+    .navbar-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: inherit;
+      position: relative;
+    }
 
-    <link rel="stylesheet" href="css/aos.css">
+    .navbar-title::after {
+      content: "";
+      display: block;
+      width: 50%;
+      height: 3px;
+      background-color: var(--accent);
+      margin: 0.3rem auto 0 auto;
+      border-radius: 5px;
+      animation: underline 2s infinite alternate;
+    }
 
-    <link rel="stylesheet" href="css/ionicons.min.css">
+    @keyframes underline {
+      from {
+        width: 30%;
+      }
 
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
+      to {
+        width: 70%;
+      }
+    }
+
+    .navbar-controls {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    /* Toggle Switch (Language) */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 70px;
+      height: 28px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #444;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider::before {
+      position: absolute;
+      content: attr(data-lang);
+      height: 24px;
+      width: 24px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 24px;
+      font-size: 12px;
+      font-weight: bold;
+      color: black;
+      transition: 0.4s;
+    }
+
+    .switch input:checked+.slider {
+      background-color: var(--accent);
+    }
+
+    .switch input:checked+.slider::before {
+      transform: translateX(32px);
+      content: attr(data-alt);
+    }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-img-wrapper {
+      position: relative;
+      width: 380px;
+      height: 380px;
+      margin: 0 auto 20px;
+    }
+
+    .hero-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+
+    .hero-img.img1 {
+      animation: swapImg1 8s infinite;
+    }
+
+    .hero-img.img2 {
+      animation: swapImg2 8s infinite;
+    }
+
+    /* Gambar pertama muncul dulu */
+    @keyframes swapImg1 {
+      0%, 45% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    /* Gambar kedua muncul setelahnya */
+    @keyframes swapImg2 {
+      0%, 45% { opacity: 0; }
+      50%, 95% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+/* 
+    .hero-img {
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      display: block;
+      animation: fadeImage 8s infinite;
+    } */
+
+    @keyframes fadeImage {
+      0%, 45% {
+        opacity: 1;
+      }
+      50%, 95% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .highlight {
+      color: #fcbf1e; 
+      font-weight: 700;
+    }
+
+    .typing {
+      font-size: 2rem;
+      border-right: 2px solid var(--accent);
+      white-space: nowrap;
+      overflow: hidden;
+      margin: 0;
+      line-height: 1.2;
+      animation: typing 4s steps(40, end) infinite alternate, blink 0.7s step-end infinite;
+    }
+
+    .typing-sub {
+      font-size: 2.2rem;
+      font-weight: bold;
+      margin: 1rem 0 0 0;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing-sub 4s steps(40, end) 1 forwards;
+      animation-delay: 0.6s;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes typing-sub {
+      from {
+        width: 0;
+      }
+
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    @media (max-width: 992px) {
+        .hero-img-wrapper {
+            width: 380px;
+            height: 380px;
+        }
+
+        .hero-img {
+            width: 380px;
+            height: 380px;
+        }
+
+        .typing {
+            font-size: 1.6rem;
+        }
+
+        .typing-sub {
+            font-size: 1.8rem;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .hero {
+            padding: 20px;
+        }
+
+        .hero-img-wrapper {
+            width: 280px;
+            height: 280px;
+            margin-bottom: 15px;
+        }
+
+        .hero-img {
+            width: 280px;
+            height: 280px;
+        }
+
+        .typing {
+            font-size: 1.2rem;
+            line-height: 1.4;
+        }
+
+        .typing-sub {
+            font-size: 1.4rem;
+            line-height: 1.3;
+        }
+
+        .btn-glow {
+            font-size: 0.9rem;
+            padding: 8px 16px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .hero-img-wrapper {
+            width: 280px;
+            height: 280px;
+        }
+
+        .hero-img {
+            width: 280px;
+            height: 280px;
+        }
+
+        .typing {
+            font-size: 1rem;
+        }
+
+        .typing-sub {
+            font-size: 1.2rem;
+        }
+    }
+
+    /* Particles */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: float 8s linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(120vh) scale(0.6);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(-20vh) scale(1);
+        opacity: 0.7;
+      }
+    }
+
+    /* Button CV */
+    .btn-glow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      background: linear-gradient(90deg, #ff7e00, #ff4500, #ff007f);
+      border: 2px solid #ff6a00;
+      box-shadow: 0 0 10px rgba(255, 110, 0, 0.8),
+        0 0 20px rgba(255, 0, 0, 0.6);
+      transition: all 0.3s ease-in-out;
+      z-index: 1;
+      position: relative;
+    }
+
+    .btn-glow:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 110, 0, 1),
+        0 0 40px rgba(255, 0, 0, 0.9);
+    }
+
+    @keyframes spin-slow {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .star {
+      display: inline-block;
+      animation: spin-slow 5s linear infinite;
+      margin-left: 8px;
+    }
+
+    /* Parallax Section */
+    .parallax {
+      background-image: url("assets/background.png");
+      min-height: 400px;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    /* About */
+    .about-section {
+      max-width: 900px;
+      margin: 4rem auto;
+      padding: 3rem 2rem;
+      background-color: rgba(30, 30, 30, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body.light .about-section {
+      background-color: white;
+      color: #222;
+    }
+
+    .about-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-title::before {
+      content: "ABOUT";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 6rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.05);
+      z-index: 0;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .about-text {
+      font-size: 1.1rem;
+      line-height: 2.0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* experience Section */
+    .experience-section {
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .experience-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .experience-title::before {
+      content: "Experience";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 6rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.05);
+      z-index: 0;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .experience-subtitle {
+      color: #aaa;
+      margin-bottom: 3rem;
+      z-index: 1;
+      position: relative;
+    }
+
+    .experience-card {
+      max-width: 900px;
+      margin: 2rem auto 0;
+      padding: 3rem 2rem;
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      text-align: left;
+    }
+
+    .experience-card h4 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .experience-category {
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .experience-list {
+      list-style: disc inside;
+      color: #ccc;
+      margin-bottom: 1.5rem;
+      padding-left: 0.5rem;
+    }
+
+    .experience-list li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* skill Section uses same layout as experience */
+    .skill-section {
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .skill-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .skill-title::before {
+      content: "Development";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 6rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.05);
+      z-index: 0;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .skill-subtitle {
+      color: #aaa;
+      margin-bottom: 3rem;
+      z-index: 1;
+      position: relative;
+    }
+
+    .skill-card {
+      max-width: 900px;
+      margin: 2rem auto 0;
+      padding: 3rem 2rem;
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      text-align: left;
+    }
+
+    .skill-card h4 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-list {
+      list-style: disc inside;
+      color: #ccc;
+      margin-bottom: 1.5rem;
+      padding-left: 0.5rem;
+    }
+
+    .skill-list li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* contact */
+    .contact-section {
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .contact-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-title::before {
+      content: "Contact";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 6rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.05);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .contact-subtitle {
+      color: #aaa;
+      margin-bottom: 3rem;
+      z-index: 1;
+      position: relative;
+    }
+
+    .contact-icons {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-icon {
+      width: 80px;
+      height: 80px;
+      background: #1c1c1c;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: var(--accent);
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .contact-item:hover .contact-icon {
+      background: var(--accent);
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    .contact-label {
+      font-weight: bold;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+
+    /* Footer */
+    footer {
+      background: transparent;
+      color: #777;
+      padding: 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Scroll to Top */
+    #scrollTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: #000;
+      font-size: 1rem;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255, 165, 0, 0.7);
+      transition: transform 0.3s ease;
+      display: none;
+      z-index: 99;
+    }
+
+    #scrollTop:hover {
+      transform: scale(1.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .experience-title,
+      .skill-title {
+        font-size: 2rem;
+      }
+
+      .experience-title::before,
+      .skill-title::before {
+        font-size: 4rem;
+      }
+
+      .experience-card,
+      .skill-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .navbar {
+        padding: 0.8rem 1rem;
+      }
+    }
+  </style>
 </head>
 
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+<body>
+  <div id="root"></div>
 
+  <script type="text/babel">
+    function App() {
+      const [lang, setLang] = React.useState("en");
+      const [dark, setDark] = React.useState(true);
+      const [showTop, setShowTop] = React.useState(false);
 
-    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="./">
-				Jeck
-			</a>
-            <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="oi oi-menu"></span> 
-				Menu
-			</button>
+      React.useEffect(() => {
+        // toggle 'light' class on body when dark === false
+        document.body.classList.toggle("light", !dark);
+      }, [dark]);
 
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav nav ml-auto">
-                    <li class="nav-item">
-                        <a href="#home-section" class="nav-link">
-                            <span>
-								Home
-							</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#about-section" class="nav-link">
-                            <span>
-                                About
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#experience-section" class="nav-link">
-                            <span>
-                                Experience
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#services-section" class="nav-link">
-                            <span>
-                                Services
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#skills-section" class="nav-link">
-                            <span>
-                                Skills
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#projects-section" class="nav-link">
-                            <span>
-                                Projects
-                            </span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#contact-section" class="nav-link">
-                            <span>
-                                Contact
-                            </span>
-                        </a>
-                    </li>
+      React.useEffect(() => {
+        function onScroll() {
+          setShowTop(window.scrollY > 300);
+        }
+        window.addEventListener("scroll", onScroll);
+        return () => window.removeEventListener("scroll", onScroll);
+      }, []);
+
+      const particleCount = 20;
+      const particles = Array.from({ length: particleCount }).map((_, i) => {
+        const left = Math.random() * 100; // vw percent
+        const size = 3 + Math.random() * 6;
+        const dur = 6 + Math.random() * 8;
+        const delay = Math.random() * 5;
+        const style = {
+          left: left + "vw",
+          width: size + "px",
+          height: size + "px",
+          animationDuration: dur + "s",
+          animationDelay: delay + "s",
+        };
+        return <div key={i} className="particle" style={style}></div>;
+      });
+
+      const aboutText = {
+        id:
+          "Saya adalah seorang dosen, peneliti, sekaligus pengembang web dengan pengalaman dalam membangun sistem berbasis web, khususnya di bidang sistem pakar, sistem pendukung keputusan, dan data sains. Saat ini saya aktif sebagai dosen pengajar, bekerja sebagai web developer tetap di salah satu universitas di Kota Medan, serta menjalani pekerjaan lepas dengan mengerjakan berbagai proyek desain dan aplikasi di berbagai lokasi.",
+        en:
+          "I am a lecturer, researcher, and web developer with experience building web-based systems, particularly in the fields of expert systems, decision support systems, and data science. I currently work as a lecturer, a full-time web developer at a university in Medan, and freelance on various design and application projects in various locations."
+      };
+
+      const skillText = {
+        id: "Full Stack Developer - Laravel, React",
+        en: "Full Stack Developer - Laravel, React"
+      };
+
+      return (
+        <>
+          <nav className="navbar">
+            <div onClick={() => setDark(prev => !prev)} style={{ cursor: "pointer" }} title="Toggle theme">🌓</div>
+            <div className="navbar-title">JDesign</div>
+            <div className="navbar-controls">
+              <label className="switch" title="EN / ID">
+                <input
+                  type="checkbox"
+                  checked={lang === "id"}
+                  onChange={(e) => setLang(e.target.checked ? "id" : "en")}
+                />
+                <span className="slider" data-lang="EN" data-alt="ID"></span>
+              </label>
+            </div>
+          </nav>
+
+          <section className="hero">
+            <div className="particles">{particles}</div>
+            <div class="hero-img-wrapper">
+              <img src="assets/me_1.png" class="hero-img img1" />
+              <img src="assets/me_2.png" class="hero-img img2" />
+            </div>
+            <h3 className="typing">
+                {lang === "id" 
+                    ? <>Selamat Datang Di <span className="highlight">Portfolio Saya</span></> 
+                    : <>Welcome to <span className="highlight">My Portfolio</span></>}
+            </h3>
+            <h1 className="typing-sub">Jaka Tirta Samudra, M.Kom.</h1>
+            <br />
+            <a href="#" className="btn-glow" aria-label="Download CV">
+              {lang === "id" ? "Unduh CV" : "Download CV"} <span className="star">⭐</span>
+            </a>
+          </section>
+
+          <section id="about" className="about-section">
+            <div className="particles">{particles}</div>
+            <h3 className="about-title">
+              {lang === "id" ? "Tentang Saya" : "About Me"}
+            </h3>
+            <small>
+              {lang === "id" ? "Menceritakan sedikit diri saya" : "Telling a little about myself"}
+            </small>
+            <p className="about-text">{aboutText[lang]}</p>
+          </section>
+
+          <section id="experience" className="experience-section">
+            <div className="particles">{particles}</div>
+            <h3 className="experience-title">
+              {lang === "id" ? "Pengalaman" : "Experiences"}
+            </h3>
+            <p className="experience-subtitle">
+              {lang === "id" ? "Beberapa kegiatan saya lakukan untuk membangun diri sendiri dan orang lain." : "Some activities I do to build myself and for others."}
+            </p>
+            <div className="experience-card">
+              <div>
+                <h4>{lang === "id" ? "2018 - Sekarang" : "2018 - Now"}</h4>
+                <p className="experience-category">
+                  {lang === "id" ? "Pengalaman Bekerja" : "Work Experience"}
+                </p>
+                <ul className="experience-list">
+                  <li>{lang === "id" ? "Pengembang Web, Departemen Komunikasi & Informasi - 2020/Sekarang" : "Web Developer, Department of Communication & Information - 2020/Now"}</li>
+                  <li>{lang === "id" ? "Konsultan Pajak, CV. Ceria Bersama Sejahtera - 2019" : "Tax Consultant, CV. Ceria Bersama Sejahtera - 2019"}</li>
+                  <li>{lang === "id" ? "Guru Tahfidz Al-Qur'an, SD Swasta Ash-Sholihin - 2019" : "Al-Qur'an Tahfidz Teacher, SD Swasta Ash-Sholihin - 2019"}</li>
+                  <li>{lang === "id" ? "Guru Komputer Dan Multimedia, SMK Yayasan Pendidikan Islam - 2018" : "Computer And Multimedia Teacher, SMK Yayasan Pendidikan Islam - 2018"}</li>
                 </ul>
+              </div>
+              <div>
+                <h4>{lang === "id" ? "2019 - Sekarang" : "2019 - Now"}</h4>
+                <p className="experience-category">{lang === "id" ? "Aplikasi" : "Application"}</p>
+                <ul className="experience-list">
+                  <small>{lang === "id" ? "Sistem Aplikasi" : "System Application"}</small>
+                  <li>{lang === "id" ? "Membangun Sistem Aplikasi Bimbel Tryout - (2025)" : "Building a Tryout Tutoring Application System - (2025)"}</li>
+                  <li>{lang === "id" ? "Membangun Sistem Informasi Beberapa Kampus Di Sumatera Utara - (2024 - Sekarang)" : "Building Information Systems for Several Campuses in North Sumatra - (2024 - Now)"}</li>
+                  <li>{lang === "id" ? "Membangun Sistem Website Dinas PUPR Kota Medan - (2024)" : "Building a Website System for the Medan City PUPR Service - (2024)"}</li>
+                  <li>{lang === "id" ? "Pengembangan Sistem Informasi Puskesmas & Sekolah - (2019 - 2024)" : "Health & School Information System Development - (2019 - 2024)"}</li>
+                  <small>{lang === "id" ? "Sitem Informasi" : "Information System"}</small>
+                  <li>{lang === "id" ? "Sistem Informasi Penelitian Mahasiswa Berbasis Website Sekolah Yayasan Pendidikan Islam Deli Tua - (2020)" : "Student Research Information System Based on the Deli Tua Islamic Education Foundation School Website - (2020)"}</li>
+                  <li>{lang === "id" ? "Sistem Informasi Website Penelitian Mahasiswa Yayasan Pendidikan Islam Yapsi Berbasis Website - (2019)" : "Yapsi Islamic Education Foundation Student Research Website-Based Website Information System - (2019)"}</li>
+                  <small>{lang === "id" ? "Profil Perusahaan" : "Company Profile"}</small>
+                  <li>{lang === "id" ? "Desain Website Profil Perusahaan Organisasi Sumatera Utara - (2019 - Sekarang)" : "Desain Website Profil Perusahaan Organisasi Sumatera Utara - (2019 - Now)"}</li>
+                  <li>{lang === "id" ? "Website Profil Perusahaan Perusahaan Unit Kegiatan Mahasiswa Cyberpreneurship - (2019)" : "Website Company Profile Company Cyberpreneurship Student Activity Unit - (2019)"}</li>
+                  <li>{lang === "id" ? "Sistem Informasi Profil Perusahaan di Tingkat Daerah Kecamatan Deli Tua dan Naman Teran Kabupaten Karo - (2019)" : "Company Profile Information System at the Regional Level of Deli Tua & Naman Teran Districts of Karo Regency - (2019)"}</li>
+                  <li>{lang === "id" ? "Pelaksanaan Sosialisasi Penggunaan Website pada Instansi P2KB dan P3A di Kabupaten Deli Serdang - (2019)" : "Implementation of Socialization on the Use of the Website at P2KB&P3A Agencies in Deli Serdang Regency - (2019)"}</li>
+                </ul>
+              </div>
+
+              <h4>{lang === "id" ? "Pelatihan" : "Training"}</h4>
+              <div>
+                <p className="experience-category">{lang === "id" ? "Pemrograman & Kecerdasan Buatan" : "Programming & Artificial Intelligence"}</p>
+                <ul className="experience-list">
+                  <li>{lang === "id" ? "Beasiswa Bakat Digital Kominfo Tema Pemrograman - (2020)" : "Kominfo Digital Talent Scholarship, Programming Theme - (2020)"}</li>
+                  <li>{lang === "id" ? "Beasiswa Bakat Digital Kominfo dengan tema Kecerdasan Buatan - (2019)" : "Kominfo Digital Talent Scholarship, Artificial Intelligence Theme - (2019)"}</li>
+                </ul>
+              </div>
+              <div>
+                <p className="experience-category">{lang === "id" ? "Desain Grafis" : "Graphic Design"}</p>
+                <ul className="experience-list">
+                  <li>{lang === "id" ? "Lembaga Sertifikasi Profesi Komputer Desain Grafis - (2016 & 2018)" : "Graphic Design Computer Professional Certification Institute - (2016 & 2018)"}</li>
+                </ul>
+              </div>
             </div>
-        </div>
-    </nav>
+          </section>
 
-    <section id="home-section" class="hero">
-        <div class="home-slider owl-carousel">
-            <div class="slider-item ">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
-                        <div class="one-third js-fullheight order-md-last img" style="background-image:url(me/me-1.png);">
-                            <div class="overlay"></div>
-                        </div>
-                        <div class="one-forth d-flex  align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-                            <div class="text">
-                                <span class="subheading">
-                                    Hello !
-                                </span>
-                                <h1 class="mb-4 mt-3">
-                                    I'm
-                                    <span>
-                                        Jaka Tirta Samudra
-                                    </span>
-                                </h1>
-                                <h5 class="mb-4">
-                                    Web Developer, Graphic Design, & UI/UX
-                                </h5>
-                                <p>
-                                    <a href="#" target="_Blank" class="btn btn-primary py-3 px-4">
-                                        Download CV
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <section id="skill" className="skill-section">
+            <div className="particles">{particles}</div>
+            <h3 className="skill-title">
+              {lang === "id" ? "Pengembangan" : "Development"}
+            </h3>
+            <p className="skill-subtitle">
+              {lang === "id" ? "Saya memiliki keahlian dari berbagai aspek" : "I have expertise from various aspects"}
+            </p>
+            <div className="skill-card">
+              <h4>{lang === "id" ? "Keterampilan" : "Skills"}</h4>
+              <div>
+                <p className="skill-category">{lang === "id" ? "Pengembangan Aplikasi Dan Bidang Lain" : "Application Development and Other Fields"}</p>
+                <ul className="skill-list">
+                  <li>Full Stack Developer Laravel & React</li>
+                  <li>Figma, Adobe XD, Whimsical, Framer X, Webflow</li>
+                  <li>Photoshop, Illustrator, Corel Draw, Canva</li>
+                  <li>Adobe Premiere, Adobe After Effect, VN, Capcut</li>
+                </ul>
+              </div>
             </div>
+          </section>
 
-            <div class="slider-item">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row d-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
-                        <div class="one-third js-fullheight order-md-last img" style="background-image:url(me/me-2.png);">
-                            <div class="overlay"></div>
-                        </div>
-                        <div class="one-forth d-flex align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
-                            <div class="text">
-                                <span class="subheading">
-                                    Currently In
-                                </span>
-                                <h1 class="mb-4 mt-3">
-                                    Medan, <span>North Sumatra</span>
-                                </h1>
-                                <p>
-                                    <a href="#" class="btn btn-white btn-outline-white py-3 px-4">
-                                        Download CV
-                                    </a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          <section id="contact" className="contact-section">
+            <div className="particles">{particles}</div>
+            <h3 className="contact-title">
+              {lang === "id" ? "Kontak Saya" : "Contact Me"}
+            </h3>
+            <p className="contact-subtitle">
+              {lang === "id" ? "Silakan hubungi saya untuk kerjasamanya" : "Please contact me for cooperation"}
+            </p>
+            <div className="contact-icons">
+              <a href="mailto:jakatirta@email.com" target="_blank" rel="noreferrer" className="contact-item">
+                <div className="contact-icon">📧</div>
+                <span className="contact-label">EMAIL</span>
+             </a>
+              <a href="https://api.whatsapp.com/send?phone=+62895612276447&text=Hallo,%20Jaka%20Tirta%20Samudra.%20S.Kom.,%20M.Kom." target="_blank" rel="noreferrer" className="contact-item">
+                <div className="contact-icon">📞</div>
+                <span className="contact-label">PHONE</span>
+              </a>
+              <a href="https://www.instagram.com/jakatirtasamudra/" target="_blank" rel="noreferrer" className="contact-item">
+                <div className="contact-icon">📩</div>
+                <span className="contact-label">INSTAGRAM</span>
+              </a>
+              <a href="https://www.instagram.com/proj.design/" target="_blank" rel="noreferrer" className="contact-item">
+                <div className="contact-icon">📩</div>
+                <span className="contact-label">INSTAGRAM</span>
+              </a>
+              <a href="https://www.youtube.com/channel/UCjDD_3sbeWq2Y3_HFGm2VNA" target="_blank" rel="noreferrer" className="contact-item">
+                <div className="contact-icon">🌍</div>
+                <span className="contact-label">YOUTUBE</span>
+              </a>
             </div>
-        </div>
-    </section>
+          </section>
 
-    <section class="ftco-about img ftco-section ftco-no-pb" id="about-section">
-        <div class="container">
-            <div class="row d-flex">
-                <div class="col-md-6 col-lg-5 d-flex">
-                    <div class="img-about img d-flex align-items-stretch">
-                        <div class="overlay"></div>
-                        <div class="img d-flex align-self-stretch align-items-center" style="background-image:url(me/me-3.jpeg);">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-7 pl-lg-5 pb-5">
-                    <div class="row justify-content-start pb-3">
-                        <div class="col-md-12 heading-section ftco-animate">
-                            <h1 class="big">
-                                About
-                            </h1>
-                            <h2 class="mb-4">
-                                About Me
-                            </h2>
-                            <p>
-                                Currently active as a teaching lecturer, freelancer and permanent worker as a Web Developer at a university in Medan City and also working on Design & Application Projects in other locations.
-                            </p>
-                            <ul class="about-info mt-4 px-md-0 px-2">
-                                <li class="d-flex">
-                                    <span>
-                                        Nama
-                                    </span>
-                                    <span>
-                                        : Jaka Tirta Samudra, S.Kom., M.Kom.
-                                    </span>
-                                </li>
-                                <li class="d-flex">
-                                    <span>
-                                        Email
-                                    </span>
-                                    <span>
-                                        : jakatirta135@gmail.com
-                                    </span>
-                                </li>
-                                <li class="d-flex">
-                                    <span>
-                                        Phone
-                                    </span>
-                                    <span>
-                                        : 0895 6122 76447
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+          <footer>
+            <p>
+              Copyright © {new Date().getFullYear()} All rights reserved | Jaka Tirta Samudra
+            </p>
+          </footer>
 
-    <section class="ftco-section ftco-no-pb" id="experience-section">
-        <div class="container">
-            <div class="row justify-content-center pb-5">
-                <div class="col-md-10 heading-section text-center ftco-animate">
-                    <h1 class="big big-2">
-                        Experience
-                    </h1>
-                    <h2 class="mb-4">
-                        Experience
-                    </h2>
-                    <p>
-                        Some activities I do to build myself and for others.
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                    <div class="resume-wrap ftco-animate">
-                        <span class="date">
-                            2018 - 2021
-                        </span>
-                        <h2>
-                            Work Experience
-                        </h2>
-                        <p class="mt-4">
-                            <li>
-                                Web Developer, Department of Communication & Information - 2020.
-                            </li>
-                            <li>
-                                Tax Consultant, CV. Ceria Bersama Sejahtera - 2019.
-                            </li>
-                            <li>
-                                Al-Qur'an Tahfidz Teacher, SD Swasta Ash-Sholihin - 2019.
-                            </li>
-                            <li>
-                                Computer And Multimedia Teacher, SMK Yayasan Pendidikan Islam - 2018.
-                            </li>
-                        </p>
-                    </div>
-                    <div class="resume-wrap ftco-animate">
-                        <span class="date">
-                            2018 - 2021
-                        </span>
-                        <h2>
-                            Website Application
-                        </h2>
-                        <p class="mt-4">
-                            <span class="position">
-                                Company Profile
-                            </span>
-                            <li>
-                                Website Based Company Profile Information System in Puskesmas Bunturaja Kab. Dairi & Deli Tua, Medan - 2020.
-                            </li>
-                            <li>
-                                North Sumatra Organization Company Profile Website Design - 2019 & 2020
-                            </li>
-                            <li>
-                                Website Company Profile Company Cyberpreneurship Student Activity Unit - 2019
-                            </li>
-                            <li>
-                                Company Profile Information System at the Regional Level of Deli Tua & Naman Teran Districts of Karo Regency - 2019
-                            </li>
-                            <li>
-                                Implementation of Socialization on the Use of the Website at P2KB&P3A Agencies in Deli Serdang Regency - 2019
-                            </li>
-                            <br>
-                            <span class="position">
-                                Information System
-                            </span>
-                            <li>
-                                Student Research Information System Based on the Deli Tua Islamic Education Foundation School Website - 2020
-                            </li>
-                            <li>
-                                Yapsi Islamic Education Foundation Student Research Website-Based Website Information System - 2019
-                            </li>
-                            <br>
-                            <span class="position">
-                                Application
-                            </span>
-                            <li>
-                                Health Partners College Guidance Application - 2021
-                            </li>
-                            <li>
-                                Point Of Sale Application From Burger SEM - 2020
-                            </li>
-                            <li>
-                                Point Of Sale Application From Cafe Mie Aceh Bersama - 2020
-                            </li>
-                        </p>
-                    </div>
-                    <div class="resume-wrap ftco-animate">
-                        <span class="date">
-                            2016 - 2020
-                        </span>
-                        <h2>
-                            Training
-                        </h2>
-                        <p class="mt-4">
-                            <span class="position">
-                                Programming & Artificial Intelligence
-                            </span>
-                            <li>
-                                Kominfo Digital Talent Scholarship Programming Theme - 2020.
-                            </li>
-                            <li>
-                                Digital Talent Scholarship Kominfo with the theme Artificial Intelligence - 2019
-                            </li>
-                            <br>
-                            <span class="position">
-                                Graphic Design
-                            </span>
-                            <li>
-                                Graphic Design Computer Professional Certification Institute - 2016 & 2018
-                            </li>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+          <div id="scrollTop" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} style={{ display: showTop ? "flex" : "none" }}>
+            ⬆
+          </div>
+        </>
+      );
+    }
 
-    <section class="ftco-section" id="services-section">
-        <div class="container">
-            <div class="row justify-content-center py-5 mt-5">
-                <div class="col-md-12 heading-section text-center ftco-animate">
-                    <h1 class="big big-2">
-                        Services
-                    </h1>
-                    <h2 class="mb-4">
-                        Services
-                    </h2>
-                    <p>
-                        Ready to work together to get results.
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 text-center d-flex ftco-animate">
-                    <a href="#" class="services-1">
-                        <span class="icon">
-								<i class="flaticon-analysis"></i>
-							</span>
-                        <div class="desc">
-                            <h3 class="mb-5">
-                                Graphic Design
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 text-center d-flex ftco-animate">
-                    <a href="#" class="services-1">
-                        <span class="icon">
-								<i class="flaticon-flasks"></i>
-							</span>
-                        <div class="desc">
-                            <h3 class="mb-5">
-                                Photography
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 text-center d-flex ftco-animate">
-                    <a href="#" class="services-1">
-                        <span class="icon">
-								<i class="flaticon-ideas"></i>
-							</span>
-                        <div class="desc">
-                            <h3 class="mb-5">
-                                Web Developer
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="ftco-section" id="skills-section">
-        <div class="container">
-            <div class="row justify-content-center pb-5">
-                <div class="col-md-12 heading-section text-center ftco-animate">
-                    <h1 class="big big-2">
-                        Skills
-                    </h1>
-                    <h2 class="mb-4">
-                        My Skills
-                    </h2>
-                    <p>
-                        I have expertise from various aspects
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 animate-box">
-                    <div class="resume-wrap ftco-animate">
-                        <span class="date">
-                            Tools & Skills
-                        </span>
-                        <p class="mt-4">
-                            <span class="position text-white">
-                                Full Stack Developer
-                            </span>
-                            <li>
-                                Laravel, React
-                            </li>
-                            <br>
-                            <span class="position text-white">
-                                UI/UX
-                            </span>
-                            <li>
-                                Fiqma, Adobe XD, Whimsical, Framer X, Webflow
-                            </li>
-                            <br>
-                            <span class="position text-white">
-                                Graphic Design
-                            </span>
-                            <li>
-                                Photoshop, Illustrator, Corel Draw, Canva
-                            </li>
-                            <br>
-                            <span class="position text-white">
-                                Video Maker
-                            </span>
-                            <li>
-                                Adobe Premiere, Adobe Affer Effect, VN, InShot
-                            </li>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <section class="ftco-section ftco-project" id="projects-section">
-        <div class="container">
-            <div class="row justify-content-center pb-5">
-                <div class="col-md-12 heading-section text-center ftco-animate">
-                    <h1 class="big big-2">
-                        Projects
-                    </h1>
-                    <h2 class="mb-4">
-                        My Projects
-                    </h2>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/P-2.jpeg);">
-                        <div class="overlay"></div>
-                        <div class="text text-center p-4">
-                            <h3>
-                                Icon Pack &amp; Illustration Design
-                            </h3>
-                            <span>
-                                Graphic Design
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/P-5.png);">
-                        <div class="overlay"></div>
-                        <div class="text text-center p-4">
-                            <h3>
-                                Branding Logo &amp; Illustration Design
-                            </h3>
-                            <span>
-                                Graphic Design
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/P-4.png);">
-                        <div class="overlay"></div>
-                        <div class="text text-center p-4">
-                            <h3>
-                                UI/UX &amp; Design
-                            </h3>
-                            <span>
-                                Web Design
-                            </span>
-                        </div>
-                    </div>
-                    <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/P-6.png);">
-                        <div class="overlay"></div>
-                        <div class="text text-center p-4">
-                            <h3>
-                                UI/UX &amp; Design
-                            </h3>
-                            <span>
-                                Web Design
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/P-3.png);">
-                                <div class="overlay"></div>
-                                <div class="text text-center p-4">
-                                    <h3>
-                                        UI/UX &amp; Design
-                                    </h3>
-                                    <span>
-                                        Mobile Design
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="project img ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/P-1.jpeg);">
-                                <div class="overlay"></div>
-                                <div class="text text-center p-4">
-                                    <h3>
-                                        UI/UX &amp; Design
-                                    </h3>
-                                    <span>
-                                        Mobile Design
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section ftco-hireme img margin-top" style="background-image: url(images/bg_1.jpg)">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-7 ftco-animate text-center">
-                    <h2>
-                        I'm <span>Available</span> for freelancing
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="ftco-section contact-section ftco-no-pb" id="contact-section">
-        <div class="container">
-            <div class="row justify-content-center mb-5 pb-3">
-                <div class="col-md-7 heading-section text-center ftco-animate">
-                    <h1 class="big big-2">
-                        Contact
-                    </h1>
-                    <h2 class="mb-4">
-                        Contact Me
-                    </h2>
-                    <p>
-                        Please contact me for cooperation
-                    </p>
-                </div>
-            </div>
-
-            <div class="row d-flex contact-info mb-5">
-                <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-                    <a href="https://dribbble.com/jakatirtasamudra" target="_Blank">
-                        <div class="align-self-stretch box p-4 text-center">
-                            <div class="icon d-flex align-items-center justify-content-center">
-                                <span class="icon-map-signs"></span>
-                            </div>
-                            <h3 class="mb-4">
-                                Dribbble
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-                    <a href="https://api.whatsapp.com/send?phone=+62895612276447&text=Hallo, Jaka Tirta Samudra. S.Kom., M.Kom." target="_Blank">
-                        <div class="align-self-stretch box p-4 text-center">
-                            <div class="icon d-flex align-items-center justify-content-center">
-                                <span class="icon-phone2"></span>
-                            </div>
-                            <h3 class="mb-4">
-                                Phone
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-                    <a href="https://www.instagram.com/jakatirtasamudra/" target="_Blank">
-                        <div class="align-self-stretch box p-4 text-center">
-                            <div class="icon d-flex align-items-center justify-content-center">
-                                <span class="icon-paper-plane"></span>
-                            </div>
-                            <h3 class="mb-4">
-                                Instagram
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-lg-3 d-flex ftco-animate">
-                    <a href="https://www.youtube.com/channel/UCjDD_3sbeWq2Y3_HFGm2VNA" target="_Blank">
-                        <div class="align-self-stretch box p-4 text-center">
-                            <div class="icon d-flex align-items-center justify-content-center">
-                                <span class="icon-globe"></span>
-                            </div>
-                            <h3 class="mb-4">
-                                Youtube
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <footer class="ftco-footer ftco-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-
-                    <p>
-                        Copyright &copy;
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        All rights reserved | <a href="https://www.instagram.com/jakatirtasamudra/" target="_blank">
-                            Jaka Tirta Samudra
-                        </a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-
-
-    <!-- loader -->
-    <div id="ftco-loader" class="show fullscreen">
-        <svg class="circular" width="48px" height="48px">
-            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee">
-            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00">
-        </svg>
-    </div>
-
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery-migrate-3.0.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.1.3.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.stellar.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/aos.js"></script>
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/scrollax.min.js"></script>
-
-    <script src="js/main.js"></script>
-
-    <script src="js/jquery.animateNumber.min.js"></script>
-    <script src="js/scrollax.min.js"></script>
-
-    <script src="js/main.js"></script>
-
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
 </body>
 
 </html>
